@@ -9,5 +9,5 @@ def test_read_main():
     assert response.status_code == 418
 
 def test_read_sub():
-    response = client.get("/foo/unicorns/yolo")
+    response = client.get("/foo/foo")
     assert response.status_code == 418

@@ -12,33 +12,23 @@ app = FastAPI()
 
 @app.get("/app")
 def read_main():
-    raise UnicornException(name="MAIN")
+    raise UnicornException(name="main")
 
 
 foo = FastAPI()
 
-@foo.get("/unicorns/{name}")
-async def read_unicorn(name: str):
-    if name == "yolo":
-        raise UnicornException(name=name)
-    return {"unicorn_name": name}
-
+@foo.get("/foo")
+async def read_unicorn():
+    raise UnicornException(name="foo")
+    
 app.mount("/foo", foo)
 
-bar = FastAPI()
-
-@bar.get("/sub")
-def read_sub():
-    return {"message": "Hello World from sub API"}
-
-
-app.mount("/bar", bar)
 
 @app.exception_handler(UnicornException)
 async def unicorn_exception_handler(request: Request, exc: UnicornException):
     return JSONResponse(
         status_code=418,
-        content={"message": f"Oops! {exc.name} did something. There goes a rainbow..."},
+        content={"message": f"Oops! {exc.name}"},
     )
 
 
