@@ -2,6 +2,7 @@ from fastapi import FastAPI, Request
 from fastapi.responses import JSONResponse
 import uvicorn
 
+
 class UnicornException(Exception):
     def __init__(self, name: str):
         self.name = name
@@ -17,19 +18,18 @@ def read_main():
 
 foo = FastAPI()
 
+
 @foo.get("/foo")
 async def read_unicorn():
     raise UnicornException(name="foo")
-    
+
+
 app.mount("/foo", foo)
 
 
 @app.exception_handler(UnicornException)
 async def unicorn_exception_handler(request: Request, exc: UnicornException):
-    return JSONResponse(
-        status_code=418,
-        content={"message": f"Oops! {exc.name}"},
-    )
+    return JSONResponse(status_code=418, content={"message": f"Oops! {exc.name}"},)
 
 
 if __name__ == "__main__":
