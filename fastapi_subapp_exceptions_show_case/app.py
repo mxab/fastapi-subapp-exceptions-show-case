@@ -20,7 +20,7 @@ foo = FastAPI()
 
 
 @foo.get("/foo")
-async def read_unicorn():
+async def read_foo():
     raise UnicornException(name="foo")
 
 
